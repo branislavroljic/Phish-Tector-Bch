@@ -1,0 +1,294 @@
+<mat-accordion>
+  <mat-expansion-panel hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title> DKIM </mat-panel-title>
+    </mat-expansion-panel-header>
+  </mat-expansion-panel>
+  <mat-expansion-panel
+    *ngFor="let rec of this.dkimResponse.signatureRecords; let i = index"
+  >
+    <mat-expansion-panel-header class="expansion-panel-title-success">
+      <mat-panel-title>Successful DKIM authorization</mat-panel-title>
+      <mat-panel-description>
+        domain: {{ rec.tagValues["d"] }} &nbsp; selector:
+        {{ rec.tagValues["s"] }}</mat-panel-description
+      >
+    </mat-expansion-panel-header>
+    <div>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title class="panel-title">
+            Public record tag value
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <table
+          mat-table
+          [dataSource]="publicRecordDataSource[i]"
+          class="mat-elevation-z8 tag-value-table"
+        >
+          <ng-container matColumnDef="tag">
+            <th mat-header-cell *matHeaderCellDef>Tag</th>
+            <td mat-cell *matCellDef="let element">{{ element.tag }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="value">
+            <th mat-header-cell *matHeaderCellDef>Value</th>
+            <td mat-cell *matCellDef="let element">{{ element.value }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef>Description</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.description }}
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="tagValueDisplayedColumns"></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: tagValueDisplayedColumns"
+          ></tr>
+        </table>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title class="panel-title"> Tag Value </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <table
+          mat-table
+          [dataSource]="tagValueDataSource[i]"
+          class="mat-elevation-z8 tag-value-table"
+        >
+          <ng-container matColumnDef="tag">
+            <th mat-header-cell *matHeaderCellDef>Tag</th>
+            <td mat-cell *matCellDef="let element">{{ element.tag }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="value">
+            <th mat-header-cell *matHeaderCellDef>Value</th>
+            <td mat-cell *matCellDef="let element">{{ element.value }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef>Description</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.description }}
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="tagValueDisplayedColumns"></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: tagValueDisplayedColumns"
+          ></tr>
+        </table>
+
+        <div class="defaults-title">Defaults</div>
+        <table
+          mat-table
+          [dataSource]="defaultsDataSource[i]"
+          class="mat-elevation-z8 tag-value-table"
+        >
+          <ng-container matColumnDef="tag">
+            <th mat-header-cell *matHeaderCellDef>Tag</th>
+            <td mat-cell *matCellDef="let element">{{ element.tag }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="value">
+            <th mat-header-cell *matHeaderCellDef>Value</th>
+            <td mat-cell *matCellDef="let element">{{ element.value }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef>Description</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.description }}
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="tagValueDisplayedColumns"></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: tagValueDisplayedColumns"
+          ></tr>
+        </table>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title class="panel-title"> Tests </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <table
+          mat-table
+          [dataSource]="testResultDataSource[i]"
+          class="mat-elevation-z8 tests-table"
+        >
+          <ng-container matColumnDef="tag">
+            <th mat-header-cell *matHeaderCellDef>Test</th>
+            <td mat-cell *matCellDef="let element">{{ element.tag }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="value">
+            <th mat-header-cell *matHeaderCellDef>Result</th>
+            <td mat-cell *matCellDef="let element">{{ element.value }}</td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="testResultDisplayedColumns"></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: testResultDisplayedColumns"
+          ></tr>
+        </table>
+      </mat-expansion-panel>
+    </div>
+  </mat-expansion-panel>
+
+  <!-- exception records -->
+
+  <mat-expansion-panel
+    *ngFor="let rec of this.dkimResponse.exceptionResponses; let i = index"
+  >
+    <mat-expansion-panel-header class="expansion-panel-title-fail">
+      <mat-panel-title>{{ rec.message }}</mat-panel-title>
+      <mat-panel-description>
+        domain: {{ rec.signatureRecord.tagValues["d"] }} &nbsp; selector:
+        {{ rec.signatureRecord.tagValues["s"] }}</mat-panel-description
+      >
+    </mat-expansion-panel-header>
+    <div>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title class="panel-title">
+            Public record tags
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <table
+          mat-table
+          [dataSource]="exceptionPublicRecordDataSource[i]"
+          class="mat-elevation-z8 tag-value-table"
+        >
+          <ng-container matColumnDef="tag">
+            <th mat-header-cell *matHeaderCellDef>Tag</th>
+            <td mat-cell *matCellDef="let element">{{ element.tag }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="value">
+            <th mat-header-cell *matHeaderCellDef>Value</th>
+            <td mat-cell *matCellDef="let element">{{ element.value }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef>Description</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.description }}
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="tagValueDisplayedColumns"></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: tagValueDisplayedColumns"
+          ></tr>
+        </table>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title class="panel-title"> Tag Value </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <table
+          mat-table
+          [dataSource]="exceptionTagValueDataSource[i]"
+          class="mat-elevation-z8 tag-value-table"
+        >
+          <ng-container matColumnDef="tag">
+            <th mat-header-cell *matHeaderCellDef>Tag</th>
+            <td mat-cell *matCellDef="let element">{{ element.tag }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="value">
+            <th mat-header-cell *matHeaderCellDef>Value</th>
+            <td mat-cell *matCellDef="let element">{{ element.value }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef>Description</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.description }}
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="tagValueDisplayedColumns"></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: tagValueDisplayedColumns"
+          ></tr>
+        </table>
+
+        <div class="defaults-title">Defaults</div>
+        <table
+          mat-table
+          [dataSource]="exceptionDefaultsDataSource[i]"
+          class="mat-elevation-z8 tag-value-table"
+        >
+          <ng-container matColumnDef="tag">
+            <th mat-header-cell *matHeaderCellDef>Tag</th>
+            <td mat-cell *matCellDef="let element">{{ element.tag }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="value">
+            <th mat-header-cell *matHeaderCellDef>Value</th>
+            <td mat-cell *matCellDef="let element">{{ element.value }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef>Description</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.description }}
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="tagValueDisplayedColumns"></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: tagValueDisplayedColumns"
+          ></tr>
+        </table>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title class="panel-title"> Tests </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <table
+          mat-table
+          [dataSource]="exceptionTestResultDataSource[i]"
+          class="mat-elevation-z8 tests-table"
+        >
+          <ng-container matColumnDef="tag">
+            <th mat-header-cell *matHeaderCellDef>Test</th>
+            <td mat-cell *matCellDef="let element">{{ element.tag }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="value">
+            <th mat-header-cell *matHeaderCellDef>Result</th>
+            <td mat-cell *matCellDef="let element">{{ element.value }}</td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="testResultDisplayedColumns"></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: testResultDisplayedColumns"
+          ></tr>
+        </table>
+      </mat-expansion-panel>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>

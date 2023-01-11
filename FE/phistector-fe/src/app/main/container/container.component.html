@@ -1,0 +1,23 @@
+<mat-toolbar color="primary">
+  <span>PhishTector</span>
+  <span class="spacer"></span>
+  <button mat-icon-button aria-label="Analyze new header" (click)="homeClick()">
+    <mat-icon>home</mat-icon>
+  </button>
+</mat-toolbar>
+<div class="container">
+  <div class="header-div">
+    <h1>Relay information</h1>
+    <app-hops></app-hops>
+  </div>
+  <div class="header-div">
+    <h1>Email authentication</h1>
+    <app-dmarc class="auth-comp"></app-dmarc>
+    <app-spf class="auth-comp"></app-spf>
+    <app-dkim class="auth-comp"></app-dkim>
+  </div>
+  <div class="header-div">
+    <h1>URL analysis</h1>
+    <app-urls></app-urls>
+  </div>
+</div>

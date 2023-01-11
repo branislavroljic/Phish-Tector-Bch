@@ -1,0 +1,32 @@
+.url-card{
+    width: 50%;
+}
+::ng-deep .mat-line{
+    word-wrap: break-word !important;
+    white-space: pre-wrap !important;
+}
+
+.not-found-block{
+    font-style: italic;
+    opacity: 50%;
+}
+.url-div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.left-div{
+    width: 30%; float: left;
+    padding-top: 5px;
+}
+
+.right-div{
+    width: 70%; float: right;
+    padding-top: 5px;
+    font-weight: bold;
+}
+
+.right-div::after {
+    content:"\200B";
+  }

@@ -1,0 +1,15 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.expansion-panel-title-success{
+    background-color: #90EE90; color: white;
+}
+
+.expansion-panel-title-fail{
+    background-color: #FF6347;; color: white;
+}
+
+.panel-title{
+    font-weight: bold; opacity: 50%; text-transform: uppercase;
+}

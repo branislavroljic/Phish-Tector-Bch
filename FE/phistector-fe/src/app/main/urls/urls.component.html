@@ -1,0 +1,42 @@
+<div class="url-div">
+  <mat-card class="url-card">
+    <mat-list>
+      <div mat-subheader>Valid URLs</div>
+      <div *ngIf="this.urlResponse?.validUrls!.length > 0 else elseValidIPBlock">
+        <mat-list-item *ngFor="let url of this.urlResponse?.validUrls">
+          <mat-icon mat-list-icon>done</mat-icon>
+          <div mat-line>{{ url }}</div>
+        </mat-list-item>
+      </div>
+      <ng-template #elseValidIPBlock
+        ><span class="not-found-block">No valid URLs found</span>
+      </ng-template>
+
+      <mat-divider></mat-divider>
+      <div mat-subheader>Blacklisted URLs</div>
+      <div *ngIf="this.urlResponse?.blacklistedUrls!.length else elseBlacklistIPBlock">
+        <!-- <mat-list-item *ngFor="let url of this.urlResponse?.blacklistedUrls">
+          <mat-icon mat-list-icon>block</mat-icon>
+          <div mat-line>{{ url.threat.url }}</div>
+        </mat-list-item> -->
+        <mat-accordion>
+          <mat-expansion-panel *ngFor="let blacklistedUrl of this.urlResponse?.blacklistedUrls">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+              {{blacklistedUrl.threat.url}}
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="left-div">Threat type</div>
+            <div class="right-div">{{ blacklistedUrl.threatType }}</div>
+            <div class="left-div">Platform type</div>
+            <div class="right-div">{{ blacklistedUrl.platformType }}</div>
+          </mat-expansion-panel>
+        </mat-accordion>
+        
+      </div>
+    </mat-list>
+    <ng-template #elseBlacklistIPBlock
+      ><span class="not-found-block">No blacklisted URLs found</span>
+    </ng-template>
+  </mat-card>
+</div>

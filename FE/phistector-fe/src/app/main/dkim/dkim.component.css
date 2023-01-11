@@ -1,0 +1,26 @@
+.tag-value-table{
+    width: 100%;
+}
+
+.mat-column-value {
+    width: 40%;
+}
+
+.tests-table{
+    width: 100%;
+}
+
+td , th {
+    white-space: normal;
+    word-wrap: break-word;
+    max-width: 200px;
+}
+.mat-cell {
+    padding: 15px 15px 15px 0px;
+}
+.defaults-title{
+     opacity: 50%; text-transform: uppercase;
+     padding-top: 20px;
+     padding-bottom: 10px;
+     font-weight: bolder;
+}

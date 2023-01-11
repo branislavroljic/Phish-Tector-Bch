@@ -1,0 +1,80 @@
+<mat-accordion>
+    <mat-expansion-panel hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title> SPF </mat-panel-title>
+        <mat-panel-description>
+           {{ spfResponse?.domain }} : {{spfResponse?.ipAddress}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+    </mat-expansion-panel>
+    <mat-expansion-panel
+    >
+    <mat-expansion-panel-header  *ngIf="spfResponse && spfResponse.record; else elseBlock" class="expansion-panel-title-success">
+      {{ spfResponse.record }}
+  </mat-expansion-panel-header>
+  <ng-template #elseBlock><mat-expansion-panel-header class="expansion-panel-title-fail">{{ spfResponse?.exceptionMessage }}</mat-expansion-panel-header> </ng-template>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title class="panel-title">Record mechanisms and modifiers</mat-panel-title>
+        </mat-expansion-panel-header>
+  
+        <table
+          mat-table
+          [dataSource]="tagValueDataSource"
+          class="mat-elevation-z8 tag-value-table"
+        >
+          <ng-container matColumnDef="tag">
+            <th mat-header-cell *matHeaderCellDef>Tag</th>
+            <td mat-cell *matCellDef="let element">{{ element.tag }}</td>
+          </ng-container>
+  
+          <ng-container matColumnDef="value">
+            <th mat-header-cell *matHeaderCellDef>Value</th>
+            <td mat-cell *matCellDef="let element">{{ element.value }}</td>
+          </ng-container>
+  
+          <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef>Description</th>
+            <td mat-cell *matCellDef="let element">{{ element.description }}</td>
+          </ng-container>
+  
+          <tr mat-header-row *matHeaderRowDef="tagValueDisplayedColumns"></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: tagValueDisplayedColumns"
+          ></tr>
+        </table>
+      </mat-expansion-panel>
+  
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title class="panel-title"> Tests and results</mat-panel-title>
+        </mat-expansion-panel-header>
+  
+      <p *ngIf="this.exceptionMessage as value">{{ value }}</p>
+      <table
+        *ngIf="!this.exceptionMessage"
+        mat-table
+        [dataSource]="testResultDataSource"
+        class="mat-elevation-z8 tests-table"
+      >
+        <ng-container matColumnDef="tag">
+          <th mat-header-cell *matHeaderCellDef>Test</th>
+          <td mat-cell *matCellDef="let element">{{ element.tag }}</td>
+        </ng-container>
+  
+        <ng-container matColumnDef="value">
+          <th mat-header-cell *matHeaderCellDef>Result</th>
+          <td mat-cell *matCellDef="let element">{{ element.value }}</td>
+        </ng-container>
+  
+        <tr mat-header-row *matHeaderRowDef="testResultDisplayedColumns"></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: testResultDisplayedColumns"
+        ></tr>
+      </table>
+      </mat-expansion-panel>
+    </mat-expansion-panel>
+  </mat-accordion>
+  
